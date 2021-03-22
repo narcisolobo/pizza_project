@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block main %}
+<div class="row">
+    <div class="col">
+        <form action="/create_pizza" method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="pizza_name" class="form-label">Pizza Name:</label>
+                <input type="text" name="pizza_name" id="pizza_name" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="pizza_desc" class="form-label">Description:</label>
+                <textarea name="pizza_desc" id="pizza_desc" class="form-control"></textarea>
+            </div>
+            <div class="mb-3 d-flex justify-content-end">
+                <input type="submit" value="ADD PIZZA" class="btn btn-outline-primary">
+            </div>
+        </form>
+    </div>
+    <div class="col">
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <td>ID</td>
+                    <td>Name</td>
+                    <td>Action</td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for pizza in pizzas %}
+                <tr>
+                    <td>{{ pizza.id }}</td>
+                    <td>{{ pizza.name }}</td>
+                    <td><a href="/pizzas/{{ pizza.id }}" class="btn btn-sm btn-outline-primary">VIEW</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="/toppings">SEE TOPPINGS</a>
+    </div>
+</div>
+{% endblock main %}

@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block main %}
+<div class="card w-50">
+    <img src="{% static 'img/neon_pizza.jpeg' %}" class="card-img-top" alt="Neon Pizza Sign">
+    <div class="card-body">
+        <h4 class="card-title">{{ pizza.name }}</h4>
+        <h5 class="card-title">ID: {{ pizza.id }}</h5>
+        <p class="card-text">Description: {{ pizza.description }}</p>
+        <ul class="list-group list-group-flush">
+            {% for topping in pizza.toppings.all %}
+            <li class="list-group-item">{{ topping.name }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    <form action="/add_topping" method="post" class="m-3">
+        {% csrf_token %}
+        <input type="hidden" name="pizza_id" value="{{pizza.id}}">
+        <select name="topping_id" class="form-control mb-3">
+            {% for topping in toppings %}
+            <option value="{{ topping.id }}">{{ topping.name }}</option>
+            {% endfor %}
+        </select>
+        <div class="d-flex justify-content-end">
+            <input type="submit" value="ADD TOPPING" class="btn btn-outline-primary">
+        </div>
+    </form>
+</div>
+{% endblock main %}

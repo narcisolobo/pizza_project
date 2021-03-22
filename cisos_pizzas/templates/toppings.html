@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block main %}
+<div class="row">
+    <div class="col">
+        <form action="/create_topping" method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="topping_name" class="form-label">Topping Name:</label>
+                <input type="text" name="topping_name" id="topping_name" class="form-control">
+            </div>
+            <div class="mb-3 d-flex justify-content-end">
+                <input type="submit" value="ADD TOPPING" class="btn btn-outline-primary">
+            </div>
+        </form>
+    </div>
+    <div class="col">
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <td>ID</td>
+                    <td>Name</td>
+                    <td>Action</td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for topping in toppings %}
+                <tr>
+                    <td>{{ topping.id }}</td>
+                    <td>{{ topping.name }}</td>
+                    <td><a href="/toppings/{{ topping.id }}" class="btn btn-sm btn-outline-primary">VIEW</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="/pizzas">VIEW PIZZAS</a>
+    </div>
+</div>
+{% endblock main %}
